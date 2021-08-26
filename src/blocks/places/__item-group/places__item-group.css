@@ -1,0 +1,9 @@
+.places__item-group {
+  display: flex;
+  background-color: #fff;
+  justify-content: space-between;
+  padding: 0 21px;
+  align-items: center;
+  min-height: 79px; /* с такой высотой пиксель в пиксель */
+  border-radius: 0 0 10px 10px;
+}

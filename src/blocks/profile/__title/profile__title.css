@@ -1,0 +1,21 @@
+.profile__title {
+  margin: 0;
+  margin-right: 18px;
+  color: #fff;
+  font-size: 42px;
+  line-height: 48px;
+  white-space: nowrap;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-weight: 500;
+}
+
+
+/* на 320px явно что то напутали.в макете тайтл явно стоит правее во всем блоке,что смотрится не очень гармонично */
+@media screen and (max-width: 370px) {
+  .profile__title {
+    margin-left: 25px;
+    margin-right: 10px;
+    font-size: 27px;
+    line-height: 33px;
+  }
+}

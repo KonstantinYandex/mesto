@@ -1,0 +1,11 @@
+.popup-of-places__img {
+  object-fit: cover;
+  max-width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 500px) {
+  .popup-of-places__img {
+    height: 299px;
+  }
+}

@@ -1,0 +1,15 @@
+.places__item-button {
+  border: none;
+  background: url(../../../images/like.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 22px;
+  height: 19px;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.places__item-button:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
