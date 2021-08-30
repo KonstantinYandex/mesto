@@ -44,6 +44,9 @@ export const popups = page.querySelectorAll('.popup')
 export const profilePopup = page.querySelector('.popup_edit-profile');
 // Попап для редактирования карточек
 export const popupAddCards = page.querySelector('.popup_add-cards')
+// попап редактирование аватарки
+export const popupEditAvatar = page.querySelector('.popup_edit-avatar')
+export const popupConfirm = page.querySelector('.popup_confirm-delete')
 // Кнопка для редактирования профиля
 export const profileEditButton = page.querySelector('.profile__edit-button');
 // общая форма для редактирования профиля
@@ -61,8 +64,12 @@ export const inputCardLink = formAddCard.querySelector('.popup__input_type_link-
 // Текстовое поле в профиле(имя)
 export const profileSelectors = {
   title: page.querySelector('.profile__title'),
-  subtitle: page.querySelector(('.profile__subtitle'))
+  subtitle: page.querySelector('.profile__subtitle'),
+  avatar : '.profile__avatar'
 }
+export const userId = 'bc4063862a0855c4075cd152'
+export const inputAvatarLink = page.querySelector('.popup__input_type_link-avatar')
+export const profileAvatar = page.querySelector('.profile__avatar')
 export const profileName = page.querySelector('.profile__title');
 // Текстовое поле в профиле(вид деятельности)
 export const profileJob = page.querySelector('.profile__subtitle');

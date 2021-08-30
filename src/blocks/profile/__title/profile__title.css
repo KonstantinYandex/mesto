@@ -10,10 +10,9 @@
 }
 
 
-/* на 320px явно что то напутали.в макете тайтл явно стоит правее во всем блоке,что смотрится не очень гармонично */
-@media screen and (max-width: 370px) {
+@media screen and (max-width: 530px) {
   .profile__title {
-    margin-left: 25px;
+    
     margin-right: 10px;
     font-size: 27px;
     line-height: 33px;

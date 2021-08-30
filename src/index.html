@@ -21,7 +21,10 @@
     <section class="profile">
       <!-- PROFILE -->
       <div class="profile__info">
-        <img src="<%=require('./images/Avatar.png')%>" alt="Аватарка автора">
+        <div class="profile__info-container">
+          <img src="<%=require('./images/Avatar.png')%>" class="profile__avatar" alt="Аватарка автора">
+          <button class="profile__info-avatar-button"></button>
+        </div>
         <div class="profile__author">
           <div class="profile__author-add">
             <h1 name = 'title' class="profile__title">Жак-Ив Кусто</h1>
@@ -52,7 +55,7 @@
           <input id='name-author' type="text" name="name" minlength="2" maxlength="40" placeholder="Имя"
             class=" popup__input popup__input_type_name " required>
           <span class=" name-author-error popup__input-error"> </span>
-          <input id='job-author' type="text" name="job" minlength="2" maxlength="200" placeholder="Призвание"
+          <input id='job-author' type="text" name="about" minlength="2" maxlength="200" placeholder="Призвание"
             class=" popup__input popup__input_type_job" required>
           <span class=" job-author-error popup__input-error"></span>
           <button type="submit" class="popup__button-save popup__button-save-edit-profile ">Сохранить</button>
@@ -76,6 +79,29 @@
       </div>
     </div>
 
+    <div class="popup popup_edit-avatar">
+      <div class="popup__container">
+        <button type="button" class="popup__close"></button>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form name="edit-form" class="popup__form popup__form-add" novalidate>
+          <input id='link' type="url" name="link" placeholder="Ссылка на аватар"
+            class="popup__input popup__input_type_link-avatar" required>
+          <span class="link-error popup__input-error"></span>
+          <button type="submit" class="popup__button-save popup__button-save-add-cards ">Создать</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup popup_confirm-delete">
+      <div class="popup__container">
+        <button type="button" class="popup__close"></button>
+        <h2 class="popup__title">Вы уверены?</h2>
+        <form name="edit-form" class="popup__form popup__form-add" novalidate>
+          <input class="popup__button-save" type="submit" value="Да" name="submit">
+        </form>
+      </div>
+    </div>
+
     <div class="popup popup-of-places">
       <div class="popup-of-places__container">
         <img class="popup-of-places__img" src='#' alt="#">
@@ -93,7 +119,11 @@
       <button class="places__item-delete-button"></button>
       <div class="places__item-group">
         <h2 class="places__item-name">Карачаевскорпопрорпо</h2>
-        <button type="button" class="places__item-button"></button>
+         <div class="places__like-container">
+          <button type="button" class="places__like-button"></button>
+          <p class="places__like-counter"></p>
+         </div>
+        
       </div>
     </div>
   </template>

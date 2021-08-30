@@ -5,19 +5,24 @@ export default class PopupWithForm extends Popup{
     super(popup)
     this._handleForSubmit = handleForSubmit
     this._inputList = this._popup.querySelectorAll('.popup__input')
-    // пока не знаю до конца как,но stackoverflow помог.до этого в коде создавались две карточки,вместо одной:))
     this._submit = (evt) =>{
-      console.log('1')
       evt.preventDefault()
       this._handleForSubmit(this._getInputValues())
       this.close()
     }
-
     this._submitClick = this._submit.bind(this)
+    this._submitButton = this._popup.querySelector('.popup__button-save')
+    this._defaultSubmitButton = this._submitButton.textContent
   }
 
 
-
+  renderLoading(isLoading,message='Сохранение...'){
+    if(isLoading){
+      this._submitButton.textContent = message
+    }else{
+      this._submitButton.textContent = this._defaultSubmitButton
+    }
+  }
   setEventListeners(){
     super.setEventListeners()
     this._popup.addEventListener('submit',this._submitClick)

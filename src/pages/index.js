@@ -1,12 +1,14 @@
 
 import { Card } from '../components/Card.js'
-import  Api  from '../components/Api.js'
+import Api from '../components/Api.js'
 import { FormValidator } from '../components/FormValidator.js'
 import Section from '../components/Section.js'
 import './index.css'
 import PopupWithImage from '../components/PopupWithImage.js'
 import PopupWithForm from '../components/PopupWithForm.js'
 import UserInfo from '../components/UserInfo.js'
+import PopupDelete from '../components/PopupDelete.js'
+
 import {
   profilePopup,
   profileName,
@@ -27,9 +29,15 @@ import {
   placesPopupName,
   placesPopup,
   placesImgOfPopup,
-  profileSelectors
+  profileSelectors,
+  popupEditAvatar,
+  profileAvatar,
+  inputAvatarLink,
+  userId,
+  popupConfirm
 }
   from '../utills/constants.js'
+
 
 
 
@@ -42,7 +50,7 @@ const api = new Api({
 })
 
 Promise.all([api.getUserInfo(), api.getOriginsCards()])
-  .then(([data,item])=>{
+  .then(([data, item]) => {
     console.log(item)
     console.log(data)
     userInfo.setUserInfo(data)
@@ -57,21 +65,93 @@ Promise.all([api.getUserInfo(), api.getOriginsCards()])
 function createCard(item, template) {
   const card = new Card({
     item, handleCardClick: (name, link) => {
-      popupWithImg.open(name, link)
+      popupWithImg.open(name,link)
+    },
+    deleteCard:()=>{
+      popupDelete.open(card)
+    },
+    likeCard:()=>{
+      const likedCard = card.likedCard();
+      const result = likedCard ? api.dislikeCard(card.getItemId()) : api.likeCard(card.getItemId());
+
+      result.then(data => {
+        card.setLikes(data.likes);
+        card.renderLikes()
+
+      }).catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      })
     }
-  }, template)
+  }, template,userId,item._id)
+
+  
 
   return card
 }
+
+const popupDelete = new PopupDelete(popupConfirm,(evt,card)=>{
+  deleteConfirm(evt,card)
+})
+
+// создание нового аватара 
+
+const newAvatar = new PopupWithForm(
+  popupEditAvatar,
+  (item) => {
+    popupEditAvatar.renderLoading(true)
+    console.log(item)
+    api.editUserAvatar(inputAvatarLink.value)
+    .then((res)=>{
+      console.log(res)
+      userInfo.setUserInfo(res)
+      newAvatar.close()
+    })
+    .finally(()=>{
+      popupEditAvatar.renderLoading(false)
+    })
+  }
+)
+
+
+
+popupDelete.setEventListeners()
+
+function deleteConfirm(evt,newCard){
+  console.log(newCard.getItemId())
+  console.log(evt)
+  api.removeCard(newCard.getItemId())
+    .then(() => {
+      newCard.removeCard()
+      popupDelete.close()
+    })
+    .catch((err) => {
+      console.log(err); 
+  });
+}
+
+
 
 
 // создание новых карточек
 const newCard = new PopupWithForm(
   popupAddCards,
   (item) => {
-    const newCards = createCard(item, placesTemplate)
-    const newAddedCard = newCards.getCard()
-    originalCards.addItems(newAddedCard)
+    newCard.renderLoading(true)
+    api.addNewCard(item)
+    
+        .then(item => {
+          console.log(item)
+          const newCards = createCard(item, placesTemplate)
+          const newAddedCard = newCards.getCard()
+          originalCards.addItems(newAddedCard)
+        })
+        .finally(()=>{
+          newCard.renderLoading(false)
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
+    
   })
 
 // вывод начальных карточек
@@ -87,10 +167,22 @@ const originalCards = new Section({
 // попап профиля
 
 const popupProfile = new PopupWithForm(
+  
   profilePopup,
   (item) => {
-    console.log(item)
-    userInfo.setUserInfo(item)
+    popupProfile.renderLoading(true)
+    api.postUserInfo(item)
+      .then(() => {
+        console.log(item)
+        userInfo.setUserInfo(item)
+      })
+      .finally(()=>{
+        popupProfile.renderLoading(false)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
   }
 )
 
@@ -111,18 +203,24 @@ addCardButton.addEventListener('click', function () {
   newCard.open()
   validationAddForm.resetValidation()
 })
+// слушатель для авы
+profileAvatar.addEventListener('click', () => {
+  newAvatar.open()
+})
+
 
 // создания и вызовы класса валидации
 const validationAddForm = new FormValidator(enableValidation, formAddCard)
 const validationEditProfile = new FormValidator(enableValidation, formEditProfile)
+const validationEditAvatar = new FormValidator(enableValidation, popupEditAvatar)
 const popupWithImg = new PopupWithImage(placesPopup, placesImgOfPopup, placesPopupName)
 validationAddForm.enableValidation()
 validationEditProfile.enableValidation()
+validationEditAvatar.enableValidation()
 popupWithImg.setEventListeners()
 popupProfile.setEventListeners()
+newAvatar.setEventListeners()
 newCard.setEventListeners()
-// originalCards.renderItems()
-
 
 
 

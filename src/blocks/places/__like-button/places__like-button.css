@@ -1,4 +1,4 @@
-.places__item-button {
+.places__like-button {
   border: none;
   background: url(../../../images/like.svg);
   background-repeat: no-repeat;
@@ -9,7 +9,7 @@
   transition: opacity 0.5s;
 }
 
-.places__item-button:hover {
+.places__like-button:hover {
   opacity: 0.5;
   cursor: pointer;
 }
