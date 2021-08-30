@@ -67,9 +67,10 @@ export const profileSelectors = {
   subtitle: page.querySelector('.profile__subtitle'),
   avatar : '.profile__avatar'
 }
-export const userId = 'bc4063862a0855c4075cd152'
+
 export const inputAvatarLink = page.querySelector('.popup__input_type_link-avatar')
 export const profileAvatar = page.querySelector('.profile__avatar')
+export const profileAvatarButton = page.querySelector('.profile__info-avatar-button')
 export const profileName = page.querySelector('.profile__title');
 // Текстовое поле в профиле(вид деятельности)
 export const profileJob = page.querySelector('.profile__subtitle');

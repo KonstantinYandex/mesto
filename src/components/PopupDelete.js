@@ -12,7 +12,7 @@ export default class PopupDelete extends Popup{
         this._popup.addEventListener('submit',(ev)=>{
             ev.preventDefault()
             this._submit(ev,this._card)
-            this.close()
+            
         })
     }
 

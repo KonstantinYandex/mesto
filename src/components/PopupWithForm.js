@@ -8,7 +8,6 @@ export default class PopupWithForm extends Popup{
     this._submit = (evt) =>{
       evt.preventDefault()
       this._handleForSubmit(this._getInputValues())
-      this.close()
     }
     this._submitClick = this._submit.bind(this)
     this._submitButton = this._popup.querySelector('.popup__button-save')

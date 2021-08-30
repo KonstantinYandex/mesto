@@ -1,4 +1,7 @@
 
+
+let userId;
+
 import { Card } from '../components/Card.js'
 import Api from '../components/Api.js'
 import { FormValidator } from '../components/FormValidator.js'
@@ -33,8 +36,8 @@ import {
   popupEditAvatar,
   profileAvatar,
   inputAvatarLink,
-  userId,
-  popupConfirm
+  popupConfirm,
+  profileAvatarButton
 }
   from '../utills/constants.js'
 
@@ -54,6 +57,8 @@ Promise.all([api.getUserInfo(), api.getOriginsCards()])
     console.log(item)
     console.log(data)
     userInfo.setUserInfo(data)
+    userId = data._id
+    
     originalCards.renderItems(item)
   })
   .catch((err) => {
@@ -98,7 +103,7 @@ const popupDelete = new PopupDelete(popupConfirm,(evt,card)=>{
 const newAvatar = new PopupWithForm(
   popupEditAvatar,
   (item) => {
-    popupEditAvatar.renderLoading(true)
+    newAvatar.renderLoading(true)
     console.log(item)
     api.editUserAvatar(inputAvatarLink.value)
     .then((res)=>{
@@ -107,7 +112,7 @@ const newAvatar = new PopupWithForm(
       newAvatar.close()
     })
     .finally(()=>{
-      popupEditAvatar.renderLoading(false)
+      newAvatar.renderLoading(false)
     })
   }
 )
@@ -144,6 +149,7 @@ const newCard = new PopupWithForm(
           const newCards = createCard(item, placesTemplate)
           const newAddedCard = newCards.getCard()
           originalCards.addItems(newAddedCard)
+          newCard.close()
         })
         .finally(()=>{
           newCard.renderLoading(false)
@@ -175,6 +181,7 @@ const popupProfile = new PopupWithForm(
       .then(() => {
         console.log(item)
         userInfo.setUserInfo(item)
+        popupProfile.close()
       })
       .finally(()=>{
         popupProfile.renderLoading(false)
@@ -204,7 +211,8 @@ addCardButton.addEventListener('click', function () {
   validationAddForm.resetValidation()
 })
 // слушатель для авы
-profileAvatar.addEventListener('click', () => {
+profileAvatarButton.addEventListener('click', () => {
+  validationEditAvatar.resetValidation()
   newAvatar.open()
 })
 
