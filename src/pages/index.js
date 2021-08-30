@@ -105,7 +105,7 @@ const newAvatar = new PopupWithForm(
   (item) => {
     newAvatar.renderLoading(true)
     console.log(item)
-    api.editUserAvatar(inputAvatarLink.value)
+    api.editUserAvatar(item.link)
     .then((res)=>{
       console.log(res)
       userInfo.setUserInfo(res)
